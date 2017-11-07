@@ -1,0 +1,17 @@
+pipeline:
+  build_test:
+    image: pndxdcode/alpine-android-fastlane
+    commands:
+       - fastlane android test
+    when:
+      event: [ push ]
+      branch: develop
+
+  deploy:
+    image: pndxdcode/alpine-android-fastlane
+    commands:
+        - fastlane playstore
+        - fastlane action supply
+    when:
+      event: [ push ]
+      branch: master

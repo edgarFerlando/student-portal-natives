@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  drone-server:
+    image: drone/drone:0.8
+    ports:
+      - 80:8000
+      - 9000:9000
+    volumes:
+      - ./drone/:/var/lib/drone/
+    restart: always
+    environment:
+      - DRONE_HOST=http://localhost:80
+      - DRONE_GITHUB=true
+      - DRONE_OPEN=true
+      - DRONE_GITHUB_URL=https://github.com
+      - DRONE_GITHUB_PRIVATE_MODE=false
+      - DRONE_GITHUB_CLIENT=b538c53f27e859084b69
+      - DRONE_GITHUB_SECRET=fbd1c492b5ff298b01d98a1183f8d61828d69f43
+      - DRONE_GITHUB_GIT_USERNAME=fendijatmiko
+      - DRONE_SECRET=drone-workshop
+      - DRONE_GITHUB_SKIP_VERIFY=false
+  drone-agent:
+    image: drone/agent:0.8
+    restart: always
+    depends_on:
+      - drone-server
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DRONE_SERVER=drone-server:9000
+      - DRONE_SECRET=drone-workshop
+      - DRONE_MAX_PROCS=3
