@@ -1,0 +1,12 @@
+!$ -> last argument of previous command
+^foo^bar -> copy previous command which is foo and replace it with bar
+!!:gs/foo/bar -> copy previous command replace every foo  with bar
+!foo  -> copy last command starting with foo
+
+########################################################################
+chgrp -> change file group
+
+########################################################################
+
+cmd 2>&1   -->> sterr of cmd to a same place as stdout
+cmd1 $(cmd2) -->> use output cmd2 as part of cmd1
